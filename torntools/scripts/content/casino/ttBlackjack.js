@@ -38,6 +38,8 @@ function Main() {
 		SP: "Split",
 		D: "Double Down",
 		H: "Hit",
+		SR: "Surrender or hit",
+		SRS: "Surrender or stand",
 	};
 
 	// display action
@@ -104,7 +106,7 @@ function getAction(player_cards, dealer_card) {
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "H",
+			A: "SR",
 		},
 		"4, 4": {
 			2: "H",
@@ -140,7 +142,7 @@ function getAction(player_cards, dealer_card) {
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "H",
+			A: "SR",
 		},
 		"7, 7": {
 			2: "SP",
@@ -151,8 +153,8 @@ function getAction(player_cards, dealer_card) {
 			7: "SP",
 			8: "H",
 			9: "H",
-			10: "H",
-			A: "H",
+			10: "SRS",
+			A: "SR",
 		},
 		"8, 8": {
 			2: "SP",
@@ -163,8 +165,8 @@ function getAction(player_cards, dealer_card) {
 			7: "SP",
 			8: "SP",
 			9: "SP",
-			10: "SP",
-			A: "SP",
+			10: "SRS",
+			A: "SR",
 		},
 		"9, 9": {
 			2: "SP",
@@ -320,7 +322,7 @@ function getAction(player_cards, dealer_card) {
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "H",
+			A: "SR",
 		},
 		6: {
 			2: "H",
@@ -332,7 +334,7 @@ function getAction(player_cards, dealer_card) {
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "H",
+			A: "SR",
 		},
 		7: {
 			2: "H",
@@ -344,7 +346,7 @@ function getAction(player_cards, dealer_card) {
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "H",
+			A: "SR",
 		},
 		8: {
 			2: "H",
@@ -404,7 +406,7 @@ function getAction(player_cards, dealer_card) {
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "H",
+			A: "SR",
 		},
 		13: {
 			2: "S",
@@ -416,7 +418,7 @@ function getAction(player_cards, dealer_card) {
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "H",
+			A: "SR",
 		},
 		14: {
 			2: "S",
@@ -427,8 +429,8 @@ function getAction(player_cards, dealer_card) {
 			7: "H",
 			8: "H",
 			9: "H",
-			10: "H",
-			A: "H",
+			10: "SR",
+			A: "SR",
 		},
 		15: {
 			2: "S",
@@ -439,8 +441,8 @@ function getAction(player_cards, dealer_card) {
 			7: "H",
 			8: "H",
 			9: "H",
-			10: "H",
-			A: "H",
+			10: "SR",
+			A: "SR",
 		},
 		16: {
 			2: "S",
@@ -451,8 +453,8 @@ function getAction(player_cards, dealer_card) {
 			7: "H",
 			8: "H",
 			9: "H",
-			10: "H",
-			A: "H",
+			10: "SRS",
+			A: "SR",
 		},
 		17: {
 			2: "S",
@@ -464,7 +466,7 @@ function getAction(player_cards, dealer_card) {
 			8: "S",
 			9: "S",
 			10: "S",
-			A: "S",
+			A: "SRS",
 		},
 	};
 
