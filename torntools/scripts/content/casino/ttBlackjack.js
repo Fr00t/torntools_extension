@@ -76,7 +76,7 @@ function getCards(type) {
 			return `${type_cards[0]}, ${type_cards[1]}`;
 		} else {
 			let val = parseInt(type_cards[0]) + parseInt(type_cards[1]);
-			if (val > 17) val = 17;
+			if (val > 18) val = 18;
 			return `${val}`;
 		}
 	}
@@ -97,13 +97,13 @@ function getAction(player_cards, dealer_card) {
 			A: "H",
 		},
 		"3, 3": {
-			2: "SP",
+			2: "H",
 			3: "SP",
 			4: "SP",
 			5: "SP",
 			6: "SP",
 			7: "SP",
-			8: "H",
+			8: "SP",
 			9: "H",
 			10: "H",
 			A: "SR",
@@ -111,7 +111,7 @@ function getAction(player_cards, dealer_card) {
 		"4, 4": {
 			2: "H",
 			3: "H",
-			4: "H",
+			4: "SP",
 			5: "SP",
 			6: "SP",
 			7: "H",
@@ -138,7 +138,7 @@ function getAction(player_cards, dealer_card) {
 			4: "SP",
 			5: "SP",
 			6: "SP",
-			7: "H",
+			7: "SP",
 			8: "H",
 			9: "H",
 			10: "H",
@@ -151,7 +151,7 @@ function getAction(player_cards, dealer_card) {
 			5: "SP",
 			6: "SP",
 			7: "SP",
-			8: "H",
+			8: "SP",
 			9: "H",
 			10: "SRS",
 			A: "SR",
@@ -208,7 +208,7 @@ function getAction(player_cards, dealer_card) {
 			2: "H",
 			3: "H",
 			4: "H",
-			5: "D",
+			5: "H",
 			6: "D",
 			7: "H",
 			8: "H",
@@ -231,7 +231,7 @@ function getAction(player_cards, dealer_card) {
 		"A, 4": {
 			2: "H",
 			3: "H",
-			4: "D",
+			4: "H",
 			5: "D",
 			6: "D",
 			7: "H",
@@ -274,14 +274,14 @@ function getAction(player_cards, dealer_card) {
 			8: "S",
 			9: "H",
 			10: "H",
-			A: "H",
+			A: "S",
 		},
 		"A, 8": {
 			2: "S",
 			3: "S",
 			4: "S",
 			5: "S",
-			6: "S",
+			6: "D",
 			7: "S",
 			8: "S",
 			9: "S",
@@ -352,8 +352,8 @@ function getAction(player_cards, dealer_card) {
 			2: "H",
 			3: "H",
 			4: "H",
-			5: "H",
-			6: "H",
+			5: "D",
+			6: "D",
 			7: "H",
 			8: "H",
 			9: "H",
@@ -361,7 +361,7 @@ function getAction(player_cards, dealer_card) {
 			A: "H",
 		},
 		9: {
-			2: "H",
+			2: "D",
 			3: "D",
 			4: "D",
 			5: "D",
@@ -393,7 +393,7 @@ function getAction(player_cards, dealer_card) {
 			7: "D",
 			8: "D",
 			9: "D",
-			10: "D",
+			10: "H",
 			A: "H",
 		},
 		12: {
@@ -467,6 +467,18 @@ function getAction(player_cards, dealer_card) {
 			9: "S",
 			10: "S",
 			A: "SRS",
+		},
+		18: {
+			2: "S",
+			3: "S",
+			4: "S",
+			5: "S",
+			6: "S",
+			7: "S",
+			8: "S",
+			9: "S",
+			10: "S",
+			A: "S",
 		},
 	};
 
