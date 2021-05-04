@@ -20,6 +20,8 @@ casinoGameLoaded().then(() => {
 	for (let li of doc.findAll(".d-buttons-wrap li")) {
 		li.addEventListener("click", () => {
 			if (doc.find(".tt-blackjack-action")) doc.find(".tt-blackjack-action").remove();
+			//Runs Main again if there are still hidden cards
+			setTimeout(() => {if (doc.find(".card-back")) Main()}, 3000)
 		});
 	}
 });
