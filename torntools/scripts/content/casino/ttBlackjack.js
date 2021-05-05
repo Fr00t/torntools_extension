@@ -7,13 +7,13 @@ casinoGameLoaded().then(() => {
 
 	doc.find(".startGame").addEventListener("click", () => {
 		if (doc.find(".bet-confirm").style.display !== "block") {
-			setTimeout(Main, 3000);
+			setTimeout(Main, 4000);
 		}
 	});
 
 	// bet confirm
 	doc.find(".bet-confirm .yes").addEventListener("click", () => {
-		setTimeout(Main, 3000);
+		setTimeout(Main, 4000);
 	});
 
 	// remove action when chosen option
@@ -21,7 +21,7 @@ casinoGameLoaded().then(() => {
 		li.addEventListener("click", () => {
 			if (doc.find(".tt-blackjack-action")) doc.find(".tt-blackjack-action").remove();
 			//Runs Main again if there are still hidden cards
-			setTimeout(() => {if (doc.find(".card-back")) Main()}, 3000)
+			setTimeout(() => {if (doc.find(".card-back")) Main()}, 4000)
 		});
 	}
 });
@@ -70,65 +70,69 @@ function Main() {
 	//let player_cards = getCards("player");
 	//let dealer_card = getCards("dealer");
 
-	console.log("player:", playerCardValue,  "ace in play:", aceInPlay, "pair:", hasPair);
+	console.log("player:", playerCardValue,  "ace in play:", aceInPlay, "pair:", hasPair, "cards:", playerCards.length);
 	console.log("dealer:", dealerCardValue);
 
-	//let action = getAction(player_cards, dealer_card);
-
 	const action_options = {
-		S: "Stand",
-		P: "Split",
-		D: "Double if possible, otherwise hit",
-		H: "Hit",
-		R: "Surrender if possible, otherwise hit",
-		Rs: "  Surrender if Possible, Otherwise Stand",
-		S3: "Stand with 2-3 Cards, Hit with 4 Cards",
-		S4: "Stand with 2-4 Cards, Hit with 5 Cards", 
-		DS3: "Double if Possible, Otherwise S3",
-		DS4: "Double if Possible, Otherwise S4",
+		2: {
+			S: "Stand",
+			P: "Split",
+			D: "Double Down",
+			H: "Hit",
+			R: "Surrender",
+			Rs: "Surrender",
+			S3: "Stand",
+			S4: "Stand", 
+			DS3: "Double Down",
+			DS4: "Double Down",
+		},
+		3: {
+			S: "Stand",
+			P: "Split",
+			D: "Hit",
+			H: "Hit",
+			R: "Hit",
+			Rs: "Stand",
+			S3: "Stand",
+			S4: "Stand", 
+			DS3: "Stand",
+			DS4: "Stand",
+		},
+		4: {
+			S: "Stand",
+			P: "Split",
+			D: "Hit",
+			H: "Hit",
+			R: "Hit",
+			Rs: "Stand",
+			S3: "Hit",
+			S4: "Stand", 
+			DS3: "Hit",
+			DS4: "Stand",
+		},
+		5: {
+			S: "Stand",
+			P: "Split",
+			D: "Hit",
+			H: "Hit",
+			R: "Hit",
+			Rs: "Stand",
+			S3: "Hit",
+			S4: "Hit", 
+			DS3: "Hit",
+			DS4: "Hit",
+		},
 	};
 
 	// display action
-	console.log(action_options[action]);
+	//let action = getAction(player_cards, dealer_card);
+	console.log(action_options[parseInt(playerCards.length)][action]);
 	let span = doc.new("span");
 	span.setClass("tt-blackjack-action");
 	span.style.display = "block";
-	span.innerText = action_options[action];
+	span.innerText = action_options[parseInt(playerCards.length)][action];
 
 	doc.find(".player-cards").appendChild(span);
-}
-
-function getCards(type) {
-	let cards = doc.findAll(`.${type}-cards .inplace:not(.card-back)`);
-	let type_cards = [];
-	getPlayerCards()
-	getDealerCard()
-	getCardCount()
-
-	for (let card of cards) {
-		let name_of_card = card.classList[0];
-		let value_of_card = name_of_card.split("-")[2];
-
-		if (isNaN(parseInt(value_of_card)) && value_of_card !== "A") value_of_card = 10;
-
-		type_cards.push(value_of_card);
-	}
-
-	if (type_cards.length === 1) {
-		return `${type_cards[0]}`;
-	} else {
-		if (type_cards[0] === type_cards[1]) {
-			return `${type_cards[0]}, ${type_cards[1]}`;
-		} else if (type_cards[1] === "A") {
-			return `${type_cards[1]}, ${type_cards[0]}`;
-		} else if (type_cards[0] === "A") {
-			return `${type_cards[0]}, ${type_cards[1]}`;
-		} else {
-			let val = parseInt(type_cards[0]) + parseInt(type_cards[1]);
-			if (val > 18) val = 18;
-			return `${val}`;
-		}
-	}
 }
 
 function getAceAction(player_cards, dealer_card){
@@ -358,6 +362,8 @@ function getPairAction(player_cards, dealer_card){
 			11: "S",
 		},
 	}
+	return action_table[player_cards][dealer_card];
+
 }
 function getAction(player_cards, dealer_card) {
 	const action_table = {
