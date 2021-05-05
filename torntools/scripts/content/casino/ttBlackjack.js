@@ -49,17 +49,22 @@ function Main() {
 
 		if (typeCards[0] == typeCards[1]){
 			var hasPair = true;
-		} 	
+		} else{
+			var hasPair = false;
+		}
 	} else{
 		var hasPair = false;
 	}
 
 	if (aceInPlay && !hasPair){
-		var action = getAceAction(parseInt(playerCardValue), dealerCardValue);
+		var action = getAceAction(parseInt(playerCardValue), parseInt(dealerCardValue));
+	} else if (aceInPlay && hasPair){
+		var action = "SP"
 	} else if (hasPair){
-		var action = getPairAction(parseInt(playerCardValue), dealerCardValue);
+		var action = getPairAction(parseInt(playerCardValue), parseInt(dealerCardValue));
 	} else {
-		var action = getAction(parseInt(playerCardValue), dealerCardValue);
+		if (parseInt(playerCardValue)>17) playerCardValue = 18;
+		var action = getAction(parseInt(playerCardValue), parseInt(dealerCardValue));
 	}
 
 	//let player_cards = getCards("player");
@@ -72,21 +77,26 @@ function Main() {
 
 	const action_options = {
 		S: "Stand",
-		SP: "Split",
-		D: "Double Down",
+		P: "Split",
+		D: "Double if possible, otherwise hit",
 		H: "Hit",
-		R: "Surrender",
+		R: "Surrender if possible, otherwise hit",
+		Rs: "  Surrender if Possible, Otherwise Stand",
+		S3: "Stand with 2-3 Cards, Hit with 4 Cards",
+		S4: "Stand with 2-4 Cards, Hit with 5 Cards", 
+		DS3: "Double if Possible, Otherwise S3",
+		DS4: "Double if Possible, Otherwise S4",
 	};
 
 	// display action
-	/* console.log(action_options[action]);
+	console.log(action_options[action]);
 	let span = doc.new("span");
 	span.setClass("tt-blackjack-action");
 	span.style.display = "block";
 	span.innerText = action_options[action];
 
 	doc.find(".player-cards").appendChild(span);
- */}
+}
 
 function getCards(type) {
 	let cards = doc.findAll(`.${type}-cards .inplace:not(.card-back)`);
@@ -184,26 +194,154 @@ function getAceAction(player_cards, dealer_card){
 			11: "H",
 		},
 		18: {
-			2: "S",
+			2: "3",
+			3: "DS3",
+			4: "DS3",
+			5: "DS3",
+			6: "DS3",
+			7: "S4",
+			8: "S3",
+			9: "H",
+			10: "H",
+			11: "S3",
+		},
+		19: {
+			2: "S4",
+			3: "S4",
+			4: "S4",
+			5: "S4",
+			6: "DS4",
+			7: "S4",
+			8: "S4",
+			9: "S4",
+			10: "S4",
+			11: "S4",
+		},
+		20: {
+			2: "S4",
+			3: "S4",
+			4: "S4",
+			5: "S4",
+			6: "S4",
+			7: "S4",
+			8: "S4",
+			9: "S4",
+			10: "S4",
+			11: "S4",
+		},
+		21: {
+			2: "S4",
+			3: "S4",
+			4: "S4",
+			5: "S4",
+			6: "S4",
+			7: "S4",
+			8: "S4",
+			9: "S4",
+			10: "S4",
+			11: "S4",
+		},
+	};
+
+	return action_table[player_cards][dealer_card];
+
+}
+
+function getPairAction(player_cards, dealer_card){
+	const action_table = {
+		4: {
+			2: "P",
+			3: "P",
+			4: "P",
+			5: "P",
+			6: "P",
+			7: "P",
+			8: "H",
+			9: "H",
+			10: "H",
+			11: "H",
+		},
+		6: {
+			2: "H",
+			3: "P",
+			4: "P",
+			5: "P",
+			6: "P",
+			7: "P",
+			8: "P",
+			9: "H",
+			10: "H",
+			11: "R",
+		},
+		8: {
+			2: "H",
+			3: "H",
+			4: "P",
+			5: "P",
+			6: "P",
+			7: "H",
+			8: "H",
+			9: "H",
+			10: "H",
+			11: "H",
+		},
+		10: {
+			2: "D",
 			3: "D",
 			4: "D",
 			5: "D",
 			6: "D",
-			7: "S",
-			8: "S",
+			7: "D",
+			8: "D",
+			9: "D",
+			10: "H",
+			11: "H",
+		},
+		12: {
+			2: "P",
+			3: "P",
+			4: "P",
+			5: "P",
+			6: "P",
+			7: "P",
+			8: "H",
 			9: "H",
 			10: "H",
-			11: "S",
+			11: "R",
 		},
-		19: {
-			2: "S",
-			3: "S",
-			4: "S",
-			5: "S",
-			6: "D",
+		14: {
+			2: "P",
+			3: "P",
+			4: "P",
+			5: "P",
+			6: "P",
+			7: "P",
+			8: "P",
+			9: "H",
+			10: "Rs",
+			11: "R",
+		},
+		16: {
+			2: "P",
+			3: "P",
+			4: "P",
+			5: "P",
+			6: "P",
+			7: "P",
+			8: "P",
+			9: "P",
+			10: "Rs",
+			11: "R",
+		},
+		18: {
+			2: "P",
+			3: "P",
+			4: "P",
+			5: "P",
+			6: "P",
 			7: "S",
-			8: "S",
-			9: "S",
+			8: "P",
+			9: "P",
 			10: "S",
 			11: "S",
 		},
@@ -219,146 +357,10 @@ function getAceAction(player_cards, dealer_card){
 			10: "S",
 			11: "S",
 		},
-		21: {
-			2: "S",
-			3: "S",
-			4: "S",
-			5: "S",
-			6: "S",
-			7: "S",
-			8: "S",
-			9: "S",
-			10: "S",
-			11: "S",
-		},
-	};
-
-	return action_table[player_cards][dealer_card];
-
+	}
 }
-
 function getAction(player_cards, dealer_card) {
 	const action_table = {
-		"2, 2": {
-			2: "SP",
-			3: "SP",
-			4: "SP",
-			5: "SP",
-			6: "SP",
-			7: "SP",
-			8: "H",
-			9: "H",
-			10: "H",
-			A: "H",
-		},
-		"3, 3": {
-			2: "H",
-			3: "SP",
-			4: "SP",
-			5: "SP",
-			6: "SP",
-			7: "SP",
-			8: "SP",
-			9: "H",
-			10: "H",
-			A: "SR",
-		},
-		"4, 4": {
-			2: "H",
-			3: "H",
-			4: "SP",
-			5: "SP",
-			6: "SP",
-			7: "H",
-			8: "H",
-			9: "H",
-			10: "H",
-			A: "H",
-		},
-		"5, 5": {
-			2: "D",
-			3: "D",
-			4: "D",
-			5: "D",
-			6: "D",
-			7: "D",
-			8: "D",
-			9: "D",
-			10: "H",
-			A: "H",
-		},
-		"6, 6": {
-			2: "SP",
-			3: "SP",
-			4: "SP",
-			5: "SP",
-			6: "SP",
-			7: "SP",
-			8: "H",
-			9: "H",
-			10: "H",
-			A: "SR",
-		},
-		"7, 7": {
-			2: "SP",
-			3: "SP",
-			4: "SP",
-			5: "SP",
-			6: "SP",
-			7: "SP",
-			8: "SP",
-			9: "H",
-			10: "SRS",
-			A: "SR",
-		},
-		"8, 8": {
-			2: "SP",
-			3: "SP",
-			4: "SP",
-			5: "SP",
-			6: "SP",
-			7: "SP",
-			8: "SP",
-			9: "SP",
-			10: "SRS",
-			A: "SR",
-		},
-		"9, 9": {
-			2: "SP",
-			3: "SP",
-			4: "SP",
-			5: "SP",
-			6: "SP",
-			7: "S",
-			8: "SP",
-			9: "SP",
-			10: "S",
-			A: "S",
-		},
-		"10, 10": {
-			2: "S",
-			3: "S",
-			4: "S",
-			5: "S",
-			6: "S",
-			7: "S",
-			8: "S",
-			9: "S",
-			10: "S",
-			A: "S",
-		},
-		"A, A": {
-			2: "SP",
-			3: "SP",
-			4: "SP",
-			5: "SP",
-			6: "SP",
-			7: "SP",
-			8: "SP",
-			9: "SP",
-			10: "SP",
-			A: "SP",
-		},
 		5: {
 			2: "H",
 			3: "H",
@@ -369,7 +371,7 @@ function getAction(player_cards, dealer_card) {
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "SR",
+			11: "R",
 		},
 		6: {
 			2: "H",
@@ -381,7 +383,7 @@ function getAction(player_cards, dealer_card) {
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "SR",
+			11: "R",
 		},
 		7: {
 			2: "H",
@@ -393,7 +395,7 @@ function getAction(player_cards, dealer_card) {
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "SR",
+			11: "R",
 		},
 		8: {
 			2: "H",
@@ -405,7 +407,7 @@ function getAction(player_cards, dealer_card) {
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "H",
+			11: "H",
 		},
 		9: {
 			2: "D",
@@ -417,7 +419,7 @@ function getAction(player_cards, dealer_card) {
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "H",
+			11: "H",
 		},
 		10: {
 			2: "D",
@@ -429,7 +431,7 @@ function getAction(player_cards, dealer_card) {
 			8: "D",
 			9: "D",
 			10: "H",
-			A: "H",
+			11: "H",
 		},
 		11: {
 			2: "D",
@@ -441,55 +443,55 @@ function getAction(player_cards, dealer_card) {
 			8: "D",
 			9: "D",
 			10: "H",
-			A: "H",
+			11: "H",
 		},
 		12: {
 			2: "H",
 			3: "H",
-			4: "S",
-			5: "S",
-			6: "S",
+			4: "S4",
+			5: "S4",
+			6: "S4",
 			7: "H",
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "SR",
+			11: "R",
 		},
 		13: {
-			2: "S",
-			3: "S",
-			4: "S",
-			5: "S",
-			6: "S",
+			2: "S4",
+			3: "S4",
+			4: "S4",
+			5: "S4",
+			6: "S4",
 			7: "H",
 			8: "H",
 			9: "H",
 			10: "H",
-			A: "SR",
+			11: "R",
 		},
 		14: {
-			2: "S",
-			3: "S",
-			4: "S",
-			5: "S",
-			6: "S",
+			2: "S4",
+			3: "S4",
+			4: "S4",
+			5: "S4",
+			6: "S4",
 			7: "H",
 			8: "H",
 			9: "H",
-			10: "SR",
-			A: "SR",
+			10: "R",
+			11: "4R",
 		},
 		15: {
-			2: "S",
-			3: "S",
+			2: "S4",
+			3: "S4",
 			4: "S",
 			5: "S",
 			6: "S",
 			7: "H",
 			8: "H",
 			9: "H",
-			10: "SR",
-			A: "SR",
+			10: "R",
+			11: "R",
 		},
 		16: {
 			2: "S",
@@ -500,8 +502,8 @@ function getAction(player_cards, dealer_card) {
 			7: "H",
 			8: "H",
 			9: "H",
-			10: "SRS",
-			A: "SR",
+			10: "Rs",
+			11: "R",
 		},
 		17: {
 			2: "S",
@@ -513,7 +515,7 @@ function getAction(player_cards, dealer_card) {
 			8: "S",
 			9: "S",
 			10: "S",
-			A: "SRS",
+			11: "Rs",
 		},
 		18: {
 			2: "S",
@@ -525,7 +527,7 @@ function getAction(player_cards, dealer_card) {
 			8: "S",
 			9: "S",
 			10: "S",
-			A: "S",
+			11: "S",
 		},
 	};
 
