@@ -27,13 +27,40 @@ casinoGameLoaded().then(() => {
 });
 
 function Main() {
-	let player_cards = getCards("player");
-	let dealer_card = getCards("dealer");
+	let playerCards = doc.findAll(".player-cards .inplace");
+	let playerCardValue = doc.find(".player-cards .total").textContent.replace(/[()]/g,'');
+	let dealerCardValue = doc.find(".dealer-cards .total").textContent.replace(/[()]/g,'');
 
-	console.log("player", player_cards);
-	console.log("dealer", dealer_card);
+	if (playerCardValue.length > 2) { //If player has ace the string in play this will say "x or y" and thus return true
+		var aceInPlay = true;
+		playerCardValue = playerCardValue.split("or")[0]
+	} else {
+		var aceInPlay = false;
+	}
+	if (playerCards.length == 2) {
+		let typeCards = []
+		for (let card of playerCards){
+			let name_of_card = card.classList[0];
+			let value_of_card = name_of_card.split("-")[2];
 
-	let action = getAction(player_cards, dealer_card);
+			if (isNaN(parseInt(value_of_card)) && value_of_card !== "A") value_of_card = 10;
+			typeCards.push(parseInt(value_of_card));
+		}
+
+		if (typeCards[0] == typeCards[1]){
+			var hasPair = true;
+		} 	
+	} else{
+		var hasPair = false;
+	}
+
+	//let player_cards = getCards("player");
+	//let dealer_card = getCards("dealer");
+
+	console.log("player:", playerCardValue,  "ace in play:", aceInPlay, "pair:", hasPair);
+	console.log("dealer:", dealerCardValue);
+
+	//let action = getAction(player_cards, dealer_card);
 
 	const action_options = {
 		S: "Stand",
@@ -45,18 +72,21 @@ function Main() {
 	};
 
 	// display action
-	console.log(action_options[action]);
+	/* console.log(action_options[action]);
 	let span = doc.new("span");
 	span.setClass("tt-blackjack-action");
 	span.style.display = "block";
 	span.innerText = action_options[action];
 
 	doc.find(".player-cards").appendChild(span);
-}
+ */}
 
 function getCards(type) {
 	let cards = doc.findAll(`.${type}-cards .inplace:not(.card-back)`);
 	let type_cards = [];
+	getPlayerCards()
+	getDealerCard()
+	getCardCount()
 
 	for (let card of cards) {
 		let name_of_card = card.classList[0];
