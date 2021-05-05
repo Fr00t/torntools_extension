@@ -35,7 +35,7 @@ function Main() {
 		var aceInPlay = true;
 		playerCardValue = playerCardValue.split("or")[0]
 	} else {
-		var aceInPlay = false;
+		var aceInPlay = false; //Note this is also returned if player has ace that can only be 1, which is what we want
 	}
 	if (playerCards.length == 2) {
 		let typeCards = []
@@ -54,6 +54,14 @@ function Main() {
 		var hasPair = false;
 	}
 
+	if (aceInPlay && !hasPair){
+		var action = getAceAction(parseInt(playerCardValue), dealerCardValue);
+	} else if (hasPair){
+		var action = getPairAction(parseInt(playerCardValue), dealerCardValue);
+	} else {
+		var action = getAction(parseInt(playerCardValue), dealerCardValue);
+	}
+
 	//let player_cards = getCards("player");
 	//let dealer_card = getCards("dealer");
 
@@ -67,8 +75,7 @@ function Main() {
 		SP: "Split",
 		D: "Double Down",
 		H: "Hit",
-		SR: "Surrender or hit",
-		SRS: "Surrender or stand",
+		R: "Surrender",
 	};
 
 	// display action
@@ -112,6 +119,122 @@ function getCards(type) {
 			return `${val}`;
 		}
 	}
+}
+
+function getAceAction(player_cards, dealer_card){
+	const action_table = {
+		13: {
+			2: "H",
+			3: "H",
+			4: "H",
+			5: "H",
+			6: "D",
+			7: "H",
+			8: "H",
+			9: "H",
+			10: "H",
+			11: "H",
+		},
+		14: {
+			2: "H",
+			3: "H",
+			4: "H",
+			5: "D",
+			6: "D",
+			7: "H",
+			8: "H",
+			9: "H",
+			10: "H",
+			11: "H",
+		},
+		15: {
+			2: "H",
+			3: "H",
+			4: "H",
+			5: "D",
+			6: "D",
+			7: "H",
+			8: "H",
+			9: "H",
+			10: "H",
+			11: "H",
+		},
+		16: {
+			2: "H",
+			3: "H",
+			4: "D",
+			5: "D",
+			6: "D",
+			7: "H",
+			8: "H",
+			9: "H",
+			10: "H",
+			11: "H",
+		},
+		17: {
+			2: "H",
+			3: "D",
+			4: "D",
+			5: "D",
+			6: "D",
+			7: "H",
+			8: "H",
+			9: "H",
+			10: "H",
+			11: "H",
+		},
+		18: {
+			2: "S",
+			3: "D",
+			4: "D",
+			5: "D",
+			6: "D",
+			7: "S",
+			8: "S",
+			9: "H",
+			10: "H",
+			11: "S",
+		},
+		19: {
+			2: "S",
+			3: "S",
+			4: "S",
+			5: "S",
+			6: "D",
+			7: "S",
+			8: "S",
+			9: "S",
+			10: "S",
+			11: "S",
+		},
+		20: {
+			2: "S",
+			3: "S",
+			4: "S",
+			5: "S",
+			6: "S",
+			7: "S",
+			8: "S",
+			9: "S",
+			10: "S",
+			11: "S",
+		},
+		21: {
+			2: "S",
+			3: "S",
+			4: "S",
+			5: "S",
+			6: "S",
+			7: "S",
+			8: "S",
+			9: "S",
+			10: "S",
+			11: "S",
+		},
+	};
+
+	return action_table[player_cards][dealer_card];
+
 }
 
 function getAction(player_cards, dealer_card) {
@@ -235,114 +358,6 @@ function getAction(player_cards, dealer_card) {
 			9: "SP",
 			10: "SP",
 			A: "SP",
-		},
-		"A, 2": {
-			2: "H",
-			3: "H",
-			4: "H",
-			5: "H",
-			6: "D",
-			7: "H",
-			8: "H",
-			9: "H",
-			10: "H",
-			A: "H",
-		},
-		"A, 3": {
-			2: "H",
-			3: "H",
-			4: "H",
-			5: "D",
-			6: "D",
-			7: "H",
-			8: "H",
-			9: "H",
-			10: "H",
-			A: "H",
-		},
-		"A, 4": {
-			2: "H",
-			3: "H",
-			4: "H",
-			5: "D",
-			6: "D",
-			7: "H",
-			8: "H",
-			9: "H",
-			10: "H",
-			A: "H",
-		},
-		"A, 5": {
-			2: "H",
-			3: "H",
-			4: "D",
-			5: "D",
-			6: "D",
-			7: "H",
-			8: "H",
-			9: "H",
-			10: "H",
-			A: "H",
-		},
-		"A, 6": {
-			2: "H",
-			3: "D",
-			4: "D",
-			5: "D",
-			6: "D",
-			7: "H",
-			8: "H",
-			9: "H",
-			10: "H",
-			A: "H",
-		},
-		"A, 7": {
-			2: "S",
-			3: "D",
-			4: "D",
-			5: "D",
-			6: "D",
-			7: "S",
-			8: "S",
-			9: "H",
-			10: "H",
-			A: "S",
-		},
-		"A, 8": {
-			2: "S",
-			3: "S",
-			4: "S",
-			5: "S",
-			6: "D",
-			7: "S",
-			8: "S",
-			9: "S",
-			10: "S",
-			A: "S",
-		},
-		"A, 9": {
-			2: "S",
-			3: "S",
-			4: "S",
-			5: "S",
-			6: "S",
-			7: "S",
-			8: "S",
-			9: "S",
-			10: "S",
-			A: "S",
-		},
-		"A, 10": {
-			2: "S",
-			3: "S",
-			4: "S",
-			5: "S",
-			6: "S",
-			7: "S",
-			8: "S",
-			9: "S",
-			10: "S",
-			A: "S",
 		},
 		5: {
 			2: "H",
