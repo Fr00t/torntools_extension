@@ -7,24 +7,31 @@ casinoGameLoaded().then(() => {
 
 	doc.find(".startGame").addEventListener("click", () => {
 		if (doc.find(".bet-confirm").style.display !== "block") {
-			setTimeout(Main, 4000);
+			setTimeout(Main, 3000);
 		}
 	});
 
 	// bet confirm
 	doc.find(".bet-confirm .yes").addEventListener("click", () => {
-		setTimeout(Main, 4000);
+		removeAction();
+		setTimeout(Main, 3000);
 	});
 
 	// remove action when chosen option
 	for (let li of doc.findAll(".d-buttons-wrap li")) {
 		li.addEventListener("click", () => {
-			if (doc.find(".tt-blackjack-action")) doc.find(".tt-blackjack-action").remove();
+			removeAction();
 			//Runs Main again if there are still hidden cards
-			setTimeout(() => {if (doc.find(".card-back")) Main()}, 4000)
+			setTimeout(() => {if (doc.find(".card-back")) Main()}, 3000)
 		});
 	}
 });
+
+function removeAction(){
+	while(doc.find(".tt-blackjack-action")){
+		doc.find(".tt-blackjack-action").remove();
+	}
+}
 
 function Main() {
 	let playerCards = doc.findAll(".player-cards .inplace");
