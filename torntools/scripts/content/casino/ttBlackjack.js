@@ -7,14 +7,14 @@ casinoGameLoaded().then(() => {
 
 	doc.find(".startGame").addEventListener("click", () => {
 		if (doc.find(".bet-confirm").style.display !== "block") {
-			setTimeout(Main, 3000);
+			setTimeout(Main, 3500);
 		}
 	});
 
 	// bet confirm
 	doc.find(".bet-confirm .yes").addEventListener("click", () => {
 		removeAction();
-		setTimeout(Main, 3000);
+		setTimeout(Main, 3500);
 	});
 
 	// remove action when chosen option
@@ -22,7 +22,7 @@ casinoGameLoaded().then(() => {
 		li.addEventListener("click", () => {
 			removeAction();
 			//Runs Main again if there are still hidden cards
-			setTimeout(() => {if (doc.find(".card-back")) Main()}, 3000)
+			setTimeout(() => {if (doc.find(".card-back")) Main()}, 3500)
 		});
 	}
 });
@@ -51,8 +51,10 @@ function Main() {
 			let value_of_card = name_of_card.split("-")[2];
 
 			if (isNaN(parseInt(value_of_card)) && value_of_card !== "A") value_of_card = 10;
+			if (value_of_card === "A") value_of_card = 11;
 			typeCards.push(parseInt(value_of_card));
 		}
+		console.log(typeCards)
 
 		if (typeCards[0] == typeCards[1]){
 			var hasPair = true;
@@ -492,7 +494,7 @@ function getAction(player_cards, dealer_card) {
 			8: "H",
 			9: "H",
 			10: "R",
-			11: "4R",
+			11: "R",
 		},
 		15: {
 			2: "S4",
